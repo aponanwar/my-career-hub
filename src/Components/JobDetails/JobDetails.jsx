@@ -1,6 +1,7 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { saveJobApplication } from "../../utility/localstorage";
 
 const JobDetails = () => {
   const jobs = useLoaderData();
@@ -11,6 +12,7 @@ const JobDetails = () => {
     console.log(job, id);
     
     const handleApplyJob = () => {
+        saveJobApplication(idInt);
         toast('you have appied succesfully');
     }
 
@@ -23,19 +25,19 @@ const JobDetails = () => {
       <div className="grid gap-4 md:grid-cols-4">
         <div className="border md:col-span-3 space-y-8 p-10">
           <h2>
-            <span className="font-bold">job_description:</span>
+            <span className="font-bold">Job Description:</span>
             {job.job_description}
           </h2>
           <h2>
-            <span className="font-bold">job_responsibility:</span>
+            <span className="font-bold">Job Responsibility:</span>
             {job.job_responsibility}
           </h2>
           <h2>
-            <span className="font-bold">educational_requirements:</span>
+            <span className="font-bold">Educational Requirements: </span>
             {job.educational_requirements}
           </h2>
           <h2>
-            <span className="font-bold">experiences: </span>
+            <span className="font-bold">Experiences: </span>
             {job.experiences}
           </h2>
         </div>
@@ -56,15 +58,15 @@ const JobDetails = () => {
             <hr />
 
             <h2>
-              <span className="font-bold">Phone:</span>
+              <span className="font-bold">Phone: </span>
               {job.contact_information.phone}
             </h2>
             <h2>
-              <span className="font-bold">Email:</span>
+              <span className="font-bold">Email: </span>
               {job.contact_information.email}
             </h2>
             <h2>
-              <span className="font-bold">Address:</span>
+              <span className="font-bold">Address: </span>
               {job.contact_information.address}
             </h2>
           </div>
