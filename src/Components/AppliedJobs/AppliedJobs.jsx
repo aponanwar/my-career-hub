@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { getStoredJobApplication } from "../../utility/localstorage";
+import Appliedjob from "../Appliedjob/Appliedjob";
 
 const AppliedJobs = () => {
   const jobs = useLoaderData();
-    const [appliedjobs, setAppliedjobs] = useState([]);
-    const [displayjobs, setDisplayjobs] = useState([]);
+  const [appliedjobs, setAppliedjobs] = useState([]);
+  const [displayjobs, setDisplayjobs] = useState([]);
 
-
-    const handleJobsFilter = filter => {
-        if (filter === 'all') {
-            setDisplayjobs(appliedjobs);
-        } else if (filter === 'remote') {
-            const remoteJobs = appliedjobs.filter(job => job.remote_or_onsite === "Remote");
-            setDisplayjobs(remoteJobs);
-        } else if (filter === 'onsite') {
-            const onsiteJobs = appliedjobs.filter(job => job.remote_or_onsite === "Onsite");
-            setDisplayjobs(onsiteJobs);
-        }
+  const handleJobsFilter = (filter) => {
+    if (filter === "all") {
+      setDisplayjobs(appliedjobs);
+    } else if (filter === "remote") {
+      const remoteJobs = appliedjobs.filter(
+        (job) => job.remote_or_onsite === "Remote"
+      );
+      setDisplayjobs(remoteJobs);
+    } else if (filter === "onsite") {
+      const onsiteJobs = appliedjobs.filter(
+        (job) => job.remote_or_onsite === "Onsite"
+      );
+      setDisplayjobs(onsiteJobs);
     }
+  };
 
   useEffect(() => {
     const storedJobIds = getStoredJobApplication();
@@ -35,14 +39,16 @@ const AppliedJobs = () => {
 
       setAppliedjobs(jobsApplied);
       setDisplayjobs(jobsApplied);
-    //   console.log(jobs, storedJobIds, jobsApplied);
+      //   console.log(jobs, storedJobIds, jobsApplied);
     }
   }, []);
 
   return (
     <div>
-      <h2 className="text-center font-bold mt-10 mb-5">Applied JOBS: {appliedjobs.length}</h2>
-      <div className="text-center"> 
+      <h2 className="text-center font-bold mt-10 mb-5">
+        Applied JOBS: {appliedjobs.length}
+      </h2>
+      <div className="text-center">
         <details className="dropdown">
           <summary className="m-1 btn">Filter By</summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
@@ -59,15 +65,8 @@ const AppliedJobs = () => {
         </details>
       </div>
 
-      <ul className="border p-5 gap-3 text-center">
-        {displayjobs.map((job) => (
-          <li key={job.id}>
-            <span>
-              ( {job.job_title}):: ({job.company_name}) :: (
-              {job.remote_or_onsite})
-            </span>
-          </li>
-        ))}
+      <ul className="border p-5 gap-3 text-center space-y-5">
+        {displayjobs.map(job => <Appliedjob key={job.id} job={job}></Appliedjob>)}
       </ul>
     </div>
   );
